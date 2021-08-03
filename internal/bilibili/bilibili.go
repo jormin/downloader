@@ -81,6 +81,7 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 	}
 	b.bvInfo = bvInfo
 	directory := strings.Replace(bvInfo.Title, " ", "_", -1)
+	directory = strings.Replace(directory, "/", "_", -1)
 	b.savePath = fmt.Sprintf("%s/%s", path, directory)
 	_, err = os.Stat(b.savePath)
 	if err != nil {
@@ -96,7 +97,7 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 	var wg sync.WaitGroup
 	var locker sync.Mutex
 	// 最多同时处理5个请求，防止被拦截
-	dch := make(chan int, 5)
+	dch := make(chan int, 2)
 	for _, p := range bvInfo.Pages {
 		wg.Add(1)
 		go func(p Pages) {
@@ -114,6 +115,7 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 						Err:   err,
 					},
 				)
+				fmt.Printf("download video %d【%s】 fail, can not get video info\n", p.Cid, p.Part)
 				locker.Lock()
 				fail += 1
 				locker.Unlock()
@@ -125,7 +127,6 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 				fileName = directory
 			} else {
 				fileName = strings.Replace(p.Part, " ", "_", -1)
-				file = fmt.Sprintf("%s/%s.mp4")
 			}
 			file = fmt.Sprintf("%s/%s.mp4", b.savePath, fileName)
 			err = sdk.DownloadVideo(cInfo.Durl[0].URL, file, bvid)
@@ -136,11 +137,13 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 						Err:   err,
 					},
 				)
+				fmt.Printf("download video %d【%s】 fail, error: %v\n", p.Cid, p.Part, err)
 				locker.Lock()
 				fail += 1
 				locker.Unlock()
 				return
 			}
+			fmt.Printf("download video %d【%s】 success\n", p.Cid, p.Part)
 			locker.Lock()
 			success += 1
 			locker.Unlock()
