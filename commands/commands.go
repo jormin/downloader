@@ -19,6 +19,9 @@ var task internal.Task
 // unique video id from video site, not page id
 var vid interface{}
 
+// the directory that videos saved in, default is command run directory
+var dir string
+
 // global error
 var err error
 
@@ -47,9 +50,21 @@ func BeforeFunc(ctx *cli.Context) error {
 	if vid == "" {
 		return errors.ArgumentVdValidateErr
 	}
+	// check save dir
+	dir, _ = os.Getwd()
+	flags := ctx.FlagNames()
+	for _, v := range flags {
+		switch v {
+		case "d":
+			dir = ctx.String("d")
+			if dir == "" {
+				return errors.FlagDirValidateErr
+			}
+		}
+	}
 	// check log file
 	path := getLogFilePath()
-	_, err := os.Stat(path)
+	_, err = os.Stat(path)
 	if os.IsNotExist(err) {
 		_, err = os.Create(path)
 		if err != nil {

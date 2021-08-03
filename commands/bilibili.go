@@ -2,7 +2,6 @@ package commands
 
 import (
 	"github.com/jormin/downloader/config"
-	"github.com/jormin/downloader/errors"
 	"github.com/jormin/downloader/internal/bilibili"
 	"github.com/urfave/cli/v2"
 )
@@ -31,17 +30,6 @@ func init() {
 
 // BiliBili download video from bilibili (https://www.bilibili.com/)
 func BiliBili(ctx *cli.Context) error {
-	dir := ""
-	flags := ctx.FlagNames()
-	for _, v := range flags {
-		switch v {
-		case "d":
-			dir = ctx.String("d")
-			if dir == "" {
-				return errors.FlagDirValidateErr
-			}
-		}
-	}
 	bili := bilibili.NewBiliBili()
 	success, fail, err = bili.Download(dir, vid)
 	// do not return err here, unified external output is in function `AfterFunc`
