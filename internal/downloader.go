@@ -13,9 +13,9 @@ type Downloader interface {
 	// GetVideoTitle the title of video that will be downloaded
 	GetVideoTitle() interface{}
 	// GetSavePath the path to save video
-	GetSavePath() interface{}
+	GetSavePath() string
 	// GetVideoInfo get video info
-	GetVideoInfo() (interface{}, error)
+	GetVideoInfo() (*Video, error)
 	// Download download video by id
 	Download(path string, id interface{}) (success int, fail int, err error)
 }

@@ -1,6 +1,43 @@
-### About
+downloader
+============
 
-Todo Manager
+[![Build Status](https://github.com/jormin/downloader/workflows/test/badge.svg?branch=master)](https://github.com/jormin/downloader/actions?query=workflow%3Atest)
+[![Codecov](https://codecov.io/gh/jormin/downloader/branch/master/graph/badge.svg)](https://codecov.io/gh/jormin/downloader)
+[![GoDoc](https://godoc.org/github.com/jormin/downloader?status.svg)](http://godoc.org/github.com/jormin/downloader)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jormin/downloader)](https://goreportcard.com/report/github.com/jormin/downloader)
+
+This is a tool to download video from third-paty video sites such as bilibili, aiyiqi, youku etc. Only support public free sources, no cracking of vip resources.
+
+Usage
+-----
+
+```
+git clone 
+```
+
+Changes
+-----
+
+###### Official version
+
+```
+// Update the cell width.
+func (b *Writer) updateWidth() {
+	b.cell.width += utf8.RuneCount(b.buf[b.pos:])
+	b.pos = len(b.buf)
+}
+```
+
+###### This extended version
+
+```
+// Update the cell width.
+func (b *Writer) updateWidth() {
+	// b.cell.width += utf8.RuneCount(b.buf[b.pos:])
+	b.cell.width += runewidth.StringWidth(string(b.buf[b.pos:]))
+	b.pos = len(b.buf)
+}
+```
 
 ### Install
 
@@ -194,3 +231,8 @@ reverse discard todo c401fng6n88n6qbf341g success
 reverse discard todo c40ck3o6n88nq44oli9g success
 reverse discard todo c3vt9u86n88m1re06t1g success
 ```
+
+License
+-------
+
+under the [MIT](./LICENSE) License

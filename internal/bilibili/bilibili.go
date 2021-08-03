@@ -2,19 +2,21 @@ package bilibili
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"os"
 	"strings"
 	"sync"
 
+	"github.com/jormin/download/internal"
 	"github.com/rs/xid"
 )
 
 // BiliBili
 type BiliBili struct {
-	BvInfo   *BvInfo `json:"bvinfo"`
-	SavePath string  `json:"save_path"`
+	bvInfo   *BvInfo
+	savePath string
 }
 
 func (b *BiliBili) GetSiteName() string {
@@ -30,19 +32,43 @@ func (b *BiliBili) GetTaskID() string {
 }
 
 func (b *BiliBili) GetVideoID() interface{} {
-	return b.BvInfo.Bvid
+	return b.bvInfo.Bvid
 }
 
 func (b *BiliBili) GetVideoTitle() interface{} {
-	return b.BvInfo.Title
+	return b.bvInfo.Title
 }
 
-func (b *BiliBili) GetSavePath() interface{} {
-	return b.SavePath
+func (b *BiliBili) GetSavePath() string {
+	return b.savePath
 }
 
-func (b *BiliBili) GetVideoInfo() (interface{}, error) {
-	return b.BvInfo, nil
+func (b *BiliBili) GetVideoInfo() (*internal.Video, error) {
+	if b.bvInfo == nil {
+		return nil, errors.New("video info is empty")
+	}
+	video := internal.Video{
+		ID:    b.bvInfo.Bvid,
+		Title: b.bvInfo.Title,
+	}
+	duration := 0
+	var pages []internal.Page
+	for _, p := range b.bvInfo.Pages {
+		duration += p.Duration
+		pages = append(
+			pages, internal.Page{
+				ID:       p.Cid,
+				Title:    p.Part,
+				Duration: p.Duration,
+				Width:    p.Dimension.Width,
+				Height:   p.Dimension.Height,
+				Rotate:   p.Dimension.Rotate,
+			},
+		)
+	}
+	video.Duration = duration
+	video.Pages = pages
+	return &video, nil
 }
 
 func (b *BiliBili) Download(path string, id interface{}) (success int, fail int, err error) {
@@ -51,17 +77,17 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 	// 查询page列表
 	bvInfo, err := sdk.GetBvInfo(bvid)
 	if err != nil {
-		return 0, 0, err
+		return 0, 0, errors.New(fmt.Sprintf("get video info from site bilibili error, please check video id is right"))
 	}
-	b.BvInfo = bvInfo
+	b.bvInfo = bvInfo
 	directory := strings.Replace(bvInfo.Title, " ", "_", -1)
-	b.SavePath = fmt.Sprintf("%s/%s", path, directory)
-	_, err = os.Stat(b.SavePath)
+	b.savePath = fmt.Sprintf("%s/%s", path, directory)
+	_, err = os.Stat(b.savePath)
 	if err != nil {
 		if !os.IsNotExist(err) {
 			return 0, 0, err
 		}
-		err = os.Mkdir(b.SavePath, os.ModePerm)
+		err = os.Mkdir(b.savePath, os.ModePerm)
 		if err != nil {
 			return 0, 0, err
 		}
@@ -101,7 +127,7 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 				fileName = strings.Replace(p.Part, " ", "_", -1)
 				file = fmt.Sprintf("%s/%s.mp4")
 			}
-			file = fmt.Sprintf("%s/%s.mp4", b.SavePath, fileName)
+			file = fmt.Sprintf("%s/%s.mp4", b.savePath, fileName)
 			err = sdk.DownloadVideo(cInfo.Durl[0].URL, file, bvid)
 			if err != nil {
 				failedPages = append(
@@ -121,7 +147,6 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 		}(p)
 	}
 	wg.Wait()
-	log.Printf("success: %d, fail: %d", success, fail)
 	if len(failedPages) > 0 {
 		b, _ := json.Marshal(failedPages)
 		log.Printf("failed pages: %s", b)

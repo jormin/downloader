@@ -1,8 +1,6 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/jormin/download/config"
 	"github.com/jormin/download/errors"
 	"github.com/jormin/download/internal/bilibili"
@@ -33,15 +31,7 @@ func init() {
 
 // BiliBili download video from bilibili (https://www.bilibili.com/)
 func BiliBili(ctx *cli.Context) error {
-	if ctx.Args().Len() == 0 {
-		return errors.MissingRequiredArgumentErr
-	}
-	id := ctx.Args().Get(0)
 	dir := ""
-
-	if id == "" {
-		return errors.FlagContentValidateErr
-	}
 	flags := ctx.FlagNames()
 	for _, v := range flags {
 		switch v {
@@ -53,7 +43,12 @@ func BiliBili(ctx *cli.Context) error {
 		}
 	}
 	bili := bilibili.NewBiliBili()
-	_, _, err := bili.Download(dir, id)
-	fmt.Println(err)
+	success, fail, err = bili.Download(dir, vid)
+	// do not return err here, unified external output is in function `AfterFunc`
+	if err != nil {
+		return nil
+	}
+	video, err = bili.GetVideoInfo()
+	savePath = bili.GetSavePath()
 	return nil
 }
