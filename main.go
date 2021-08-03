@@ -4,16 +4,16 @@ import (
 	"log"
 	"os"
 
-	_ "github.com/jormin/download/commands"
-	"github.com/jormin/download/config"
+	_ "github.com/jormin/downloader/commands"
+	"github.com/jormin/downloader/config"
 	"github.com/urfave/cli/v2"
 )
 
 func main() {
 	app := &cli.App{
-		Name:        "todo",
-		Usage:       "A simple tool to manage your todo list",
-		Version:     "v1.0.0",
+		Name:        "downloader",
+		Usage:       "This is a tool to download video from third-paty video sites such as bilibili, aiyiqi, youku etc. Only support public free sources, no cracking of vip resources.",
+		Version:     "v0.0.1",
 		Description: "A simple tool to manage your todo list",
 		Commands:    config.GetRegisteredCommands(),
 	}

@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/jormin/download/errors"
-	"github.com/jormin/download/internal"
+	"github.com/jormin/downloader/errors"
+	"github.com/jormin/downloader/internal"
 	"github.com/mitchellh/go-homedir"
 	"github.com/rs/xid"
 	"github.com/urfave/cli/v2"

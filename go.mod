@@ -1,4 +1,4 @@
-module github.com/jormin/download
+module github.com/jormin/downloader
 
 go 1.15
 

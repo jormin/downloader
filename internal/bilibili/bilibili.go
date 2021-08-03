@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/jormin/download/internal"
+	"github.com/jormin/downloader/internal"
 	"github.com/rs/xid"
 )
 

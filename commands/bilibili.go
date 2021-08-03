@@ -1,9 +1,9 @@
 package commands
 
 import (
-	"github.com/jormin/download/config"
-	"github.com/jormin/download/errors"
-	"github.com/jormin/download/internal/bilibili"
+	"github.com/jormin/downloader/config"
+	"github.com/jormin/downloader/errors"
+	"github.com/jormin/downloader/internal/bilibili"
 	"github.com/urfave/cli/v2"
 )
 
