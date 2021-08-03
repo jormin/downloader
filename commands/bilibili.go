@@ -21,6 +21,12 @@ func init() {
 					Required:    false,
 					DefaultText: "",
 				},
+				&cli.StringFlag{
+					Name:        "dir",
+					Usage:       "the directory to save video",
+					Required:    false,
+					DefaultText: "",
+				},
 			},
 			Before: BeforeFunc,
 			After:  AfterFunc,

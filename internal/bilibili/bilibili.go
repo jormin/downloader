@@ -7,7 +7,6 @@ import (
 	"log"
 	"os"
 	"strings"
-	"sync"
 
 	"github.com/jormin/downloader/internal"
 	"github.com/rs/xid"
@@ -94,62 +93,44 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 		}
 	}
 	var failedPages []FailedPages
-	var wg sync.WaitGroup
-	var locker sync.Mutex
-	// 最多同时处理5个请求，防止被拦截
-	dch := make(chan int, 2)
+	// Considering that external services have frequency restrictions, do not use goroutine
 	for _, p := range bvInfo.Pages {
-		wg.Add(1)
-		go func(p Pages) {
-			dch <- 1
-			defer func() {
-				wg.Done()
-				<-dch
-			}()
-			// 查询C信息
-			cInfo, err := sdk.GetCInfo(bvid, p.Cid)
-			if err != nil {
-				failedPages = append(
-					failedPages, FailedPages{
-						Pages: p,
-						Err:   err,
-					},
-				)
-				fmt.Printf("download video %d【%s】 fail, can not get video info\n", p.Cid, p.Part)
-				locker.Lock()
-				fail += 1
-				locker.Unlock()
-				return
-			}
-			// 下载视频
-			var file, fileName string
-			if len(bvInfo.Pages) == 1 {
-				fileName = directory
-			} else {
-				fileName = strings.Replace(p.Part, " ", "_", -1)
-			}
-			file = fmt.Sprintf("%s/%s.mp4", b.savePath, fileName)
-			err = sdk.DownloadVideo(cInfo.Durl[0].URL, file, bvid)
-			if err != nil {
-				failedPages = append(
-					failedPages, FailedPages{
-						Pages: p,
-						Err:   err,
-					},
-				)
-				fmt.Printf("download video %d【%s】 fail, error: %v\n", p.Cid, p.Part, err)
-				locker.Lock()
-				fail += 1
-				locker.Unlock()
-				return
-			}
-			fmt.Printf("download video %d【%s】 success\n", p.Cid, p.Part)
-			locker.Lock()
-			success += 1
-			locker.Unlock()
-		}(p)
+		// get page info
+		cInfo, err := sdk.GetCInfo(bvid, p.Cid)
+		if err != nil {
+			failedPages = append(
+				failedPages, FailedPages{
+					Pages: p,
+					Err:   err,
+				},
+			)
+			fmt.Printf("download video %d【%s】 fail, can not get video info\n", p.Cid, p.Part)
+			fail += 1
+			continue
+		}
+		// download video
+		var file, fileName string
+		if len(bvInfo.Pages) == 1 {
+			fileName = directory
+		} else {
+			fileName = strings.Replace(p.Part, " ", "_", -1)
+		}
+		file = fmt.Sprintf("%s/%s.mp4", b.savePath, fileName)
+		err = sdk.DownloadVideo(cInfo.Durl[0].URL, file, bvid)
+		if err != nil {
+			failedPages = append(
+				failedPages, FailedPages{
+					Pages: p,
+					Err:   err,
+				},
+			)
+			fmt.Printf("download video %d【%s】 fail, error: %v\n", p.Cid, p.Part, err)
+			fail += 1
+			continue
+		}
+		fmt.Printf("download video %d【%s】 success\n", p.Cid, p.Part)
+		success += 1
 	}
-	wg.Wait()
 	if len(failedPages) > 0 {
 		b, _ := json.Marshal(failedPages)
 		log.Printf("failed pages: %s", b)
