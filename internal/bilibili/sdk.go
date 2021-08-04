@@ -115,7 +115,10 @@ func (bl *SDK) http(url string, headers map[string]string, data interface{}) err
 		}
 	}
 	client := http.Client{}
-	res, _ := client.Do(req)
+	res, err := client.Do(req)
+	if err != nil {
+		return err
+	}
 	if res.StatusCode != http.StatusOK {
 		return errors.New(res.Status)
 	}
