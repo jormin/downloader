@@ -124,7 +124,7 @@ func (bl *SDK) http(url string, headers map[string]string, data interface{}) err
 	}
 	defer res.Body.Close()
 	b, _ := ioutil.ReadAll(res.Body)
-	var biliRes BiliBiliRes
+	var biliRes Res
 	_ = json.Unmarshal(b, &biliRes)
 	if biliRes.Code != ResCodeOK {
 		return errors.New(biliRes.Message)

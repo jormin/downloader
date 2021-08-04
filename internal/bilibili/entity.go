@@ -1,16 +1,14 @@
 package bilibili
 
-import "fmt"
-
-// BiliBiliRes
-type BiliBiliRes struct {
+// Res bilibili api response
+type Res struct {
 	Code    int         `json:"code"`
 	Message string      `json:"message"`
 	TTL     int         `json:"ttl"`
 	Data    interface{} `json:"data"`
 }
 
-// Page
+// Page bilibili page
 type Page struct {
 	Cid       int    `json:"cid"`
 	Page      int    `json:"page"`
@@ -26,7 +24,7 @@ type Page struct {
 	} `json:"dimension"`
 }
 
-// AVInfo
+// AvInfo bilibili avinfo
 type AvInfo struct {
 	Bvid      string    `json:"bvid"`
 	Aid       int       `json:"aid"`
@@ -53,11 +51,15 @@ type AvInfo struct {
 	Subtitle  Subtitle  `json:"subtitle"`
 	UserGarb  UserGarb  `json:"user_garb"`
 }
+
+// DescV2 describe of the video
 type DescV2 struct {
 	RawText string `json:"raw_text"`
 	Type    int    `json:"type"`
 	BizID   int    `json:"biz_id"`
 }
+
+// Rights rights of the video
 type Rights struct {
 	Bp            int `json:"bp"`
 	Elec          int `json:"elec"`
@@ -74,11 +76,15 @@ type Rights struct {
 	CleanMode     int `json:"clean_mode"`
 	IsSteinGate   int `json:"is_stein_gate"`
 }
+
+// Owner owner info of the video
 type Owner struct {
 	Mid  int    `json:"mid"`
 	Name string `json:"name"`
 	Face string `json:"face"`
 }
+
+// Stat stat of the video
 type Stat struct {
 	Aid        int    `json:"aid"`
 	View       int    `json:"view"`
@@ -95,11 +101,14 @@ type Stat struct {
 	ArgueMsg   string `json:"argue_msg"`
 }
 
+// Dimension dimension of the video, include width, height and rotate
 type Dimension struct {
 	Width  int `json:"width"`
 	Height int `json:"height"`
 	Rotate int `json:"rotate"`
 }
+
+// Pages pages of the video
 type Pages struct {
 	Cid       int       `json:"cid"`
 	Page      int       `json:"page"`
@@ -110,15 +119,19 @@ type Pages struct {
 	Weblink   string    `json:"weblink"`
 	Dimension Dimension `json:"dimension"`
 }
+
+// Subtitle subtitle of the video
 type Subtitle struct {
 	AllowSubmit bool          `json:"allow_submit"`
 	List        []interface{} `json:"list"`
 }
+
+// UserGarb user grab of the video
 type UserGarb struct {
 	URLImageAniCut string `json:"url_image_ani_cut"`
 }
 
-// BvInfo
+// BvInfo bilibili bvinfo
 type BvInfo struct {
 	Bvid      string    `json:"bvid"`
 	Aid       int       `json:"aid"`
@@ -146,7 +159,7 @@ type BvInfo struct {
 	UserGarb  UserGarb  `json:"user_garb"`
 }
 
-// CInfo
+// CInfo bilibili cinfo
 type CInfo struct {
 	From              string           `json:"from"`
 	Result            string           `json:"result"`
@@ -164,6 +177,8 @@ type CInfo struct {
 	SupportFormats    []SupportFormats `json:"support_formats"`
 	HighFormat        interface{}      `json:"high_format"`
 }
+
+// Durl download info of the video
 type Durl struct {
 	Order     int      `json:"order"`
 	Length    int      `json:"length"`
@@ -173,21 +188,12 @@ type Durl struct {
 	URL       string   `json:"url"`
 	BackupURL []string `json:"backup_url"`
 }
+
+// SupportFormats support formats of the video
 type SupportFormats struct {
 	Quality        int    `json:"quality"`
 	Format         string `json:"format"`
 	NewDescription string `json:"new_description"`
 	DisplayDesc    string `json:"display_desc"`
 	Superscript    string `json:"superscript"`
-}
-
-// FailedPages
-type FailedPages struct {
-	Pages Pages
-	Err   error
-}
-
-// String
-func (f *FailedPages) String() string {
-	return fmt.Sprintf("pages: %+v, failed error: %v", f.Pages, f.Err)
 }
