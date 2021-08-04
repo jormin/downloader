@@ -88,7 +88,10 @@ func (bl *SDK) DownloadVideo(bvid string, url string, file string) error {
 	req, _ := http.NewRequest(http.MethodGet, url, nil)
 	req.Header.Add("Referer", fmt.Sprintf("https://www.bilibili.com/video/%s", bvid))
 	client := http.Client{}
-	res, _ := client.Do(req)
+	res, err := client.Do(req)
+	if err != nil {
+		return err
+	}
 	if res.StatusCode != 200 {
 		return errors.New(res.Status)
 	}
