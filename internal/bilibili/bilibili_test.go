@@ -34,7 +34,7 @@ func TestBiliBili_Download(t *testing.T) {
 			},
 			args: args{
 				path: "./test",
-				id:   "BV1bz4y127Kk",
+				id:   "BV1QX4y1G7fG",
 			},
 			wantSuccess: 1,
 			wantFail:    0,
@@ -48,7 +48,7 @@ func TestBiliBili_Download(t *testing.T) {
 			},
 			args: args{
 				path: "./test",
-				id:   "BV1bz4y127Kk",
+				id:   "BV1QX4y1G7fG",
 			},
 			wantSuccess: 0,
 			wantFail:    0,
@@ -76,7 +76,7 @@ func TestBiliBili_Download(t *testing.T) {
 			},
 			args: args{
 				path: "",
-				id:   "BV1bz4y127Kkxxx",
+				id:   "BV1QX4y1G7fGxxx",
 			},
 			wantSuccess: 0,
 			wantFail:    0,
@@ -90,7 +90,7 @@ func TestBiliBili_Download(t *testing.T) {
 			},
 			args: args{
 				path: "",
-				id:   "BV1bz4y127Kk",
+				id:   "BV1QX4y1G7fG",
 			},
 			wantSuccess: 0,
 			wantFail:    0,
@@ -104,7 +104,7 @@ func TestBiliBili_Download(t *testing.T) {
 			},
 			args: args{
 				path: "",
-				id:   "BV1bz4y127Kk",
+				id:   "BV1QX4y1G7fG",
 			},
 			wantSuccess: 0,
 			wantFail:    0,
@@ -402,10 +402,10 @@ func TestBiliBili_GetVideoInfo(t *testing.T) {
 		{
 			name: "01",
 			fields: fields{
-				bvInfoStr: `{"bvid":"BV1bz4y127Kk","aid":586724070,"videos":1,"tid":27,"tname":"综合","copyright":1,"pic":"http://i1.hdslb.com/bfs/archive/cf435a1f9d28f2504c8631c8833524c266b25a08.png","title":"超级宝贝JOJO：一起去爬山","pubdate":1613483877,"ctime":1613483877,"desc":"-","desc_v2":[{"raw_text":"-","type":1,"biz_id":0}],"state":0,"duration":68,"mission_id":16360,"rights":{"bp":0,"elec":0,"download":1,"movie":0,"pay":0,"hd5":1,"no_reprint":1,"autoplay":1,"ugc_pay":0,"is_cooperation":0,"ugc_pay_preview":0,"no_background":0,"clean_mode":0,"is_stein_gate":0},"owner":{"mid":631032199,"name":"宝宝巴士动画","face":"http://i1.hdslb.com/bfs/face/dea719ffd2f000506c4ae48348b3035165431dc7.jpg"},"stat":{"aid":586724070,"view":52072,"danmaku":2,"reply":4,"favorite":14,"coin":13,"share":17,"now_rank":0,"his_rank":0,"like":64,"dislike":0,"evaluation":"","argue_msg":""},"dynamic":"","cid":298528945,"dimension":{"width":1920,"height":1080,"rotate":0},"no_cache":false,"pages":[{"cid":298528945,"page":1,"from":"vupload","part":"1613483514414.mp4","duration":68,"vid":"","weblink":"","dimension":{"width":1920,"height":1080,"rotate":0}}],"subtitle":{"allow_submit":false,"list":[]},"user_garb":{"url_image_ani_cut":""}}`,
+				bvInfoStr: `{"bvid":"BV1QX4y1G7fG","aid":586724070,"videos":1,"tid":27,"tname":"综合","copyright":1,"pic":"http://i1.hdslb.com/bfs/archive/cf435a1f9d28f2504c8631c8833524c266b25a08.png","title":"超级宝贝JOJO：一起去爬山","pubdate":1613483877,"ctime":1613483877,"desc":"-","desc_v2":[{"raw_text":"-","type":1,"biz_id":0}],"state":0,"duration":68,"mission_id":16360,"rights":{"bp":0,"elec":0,"download":1,"movie":0,"pay":0,"hd5":1,"no_reprint":1,"autoplay":1,"ugc_pay":0,"is_cooperation":0,"ugc_pay_preview":0,"no_background":0,"clean_mode":0,"is_stein_gate":0},"owner":{"mid":631032199,"name":"宝宝巴士动画","face":"http://i1.hdslb.com/bfs/face/dea719ffd2f000506c4ae48348b3035165431dc7.jpg"},"stat":{"aid":586724070,"view":52072,"danmaku":2,"reply":4,"favorite":14,"coin":13,"share":17,"now_rank":0,"his_rank":0,"like":64,"dislike":0,"evaluation":"","argue_msg":""},"dynamic":"","cid":298528945,"dimension":{"width":1920,"height":1080,"rotate":0},"no_cache":false,"pages":[{"cid":298528945,"page":1,"from":"vupload","part":"1613483514414.mp4","duration":68,"vid":"","weblink":"","dimension":{"width":1920,"height":1080,"rotate":0}}],"subtitle":{"allow_submit":false,"list":[]},"user_garb":{"url_image_ani_cut":""}}`,
 			},
 			want: &internal.Video{
-				ID:       "BV1bz4y127Kk",
+				ID:       "BV1QX4y1G7fG",
 				Title:    "超级宝贝JOJO：一起去爬山",
 				Duration: 68,
 				Pages: []internal.Page{

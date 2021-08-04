@@ -41,8 +41,8 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "01",
 			args: args{
-				url:  "https://upos-sz-mirrorcoso1.bilivideo.com/upgcxcode/47/91/133079147/133079147_nb2-1-32.flv?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfqXBvEqxTEto8BTrNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0B599M=&uipk=5&nbs=1&deadline=1628068845&gen=playurlv2&os=coso1bv&oi=22403703&trid=55a4d9997a1e4f7692d6511464bf5452u&platform=pc&upsig=aec919744f34f14313adbb74345df980&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,platform&mid=0&bvc=vod&nettype=0&orderid=0,3&agrr=1&logo=80000000",
-				file: "./test_sdk/a.flv",
+				url:  "https://download.lerzen.com/test.txt",
+				file: "./test_sdk/a.txt",
 				bvid: "BV1nJ411R7gk",
 			},
 			wantErr: false,
@@ -50,17 +50,17 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "02",
 			args: args{
-				url:  "https://upos-sz-mirrorcoso1.bilivideo.com/upgcxcode/47/91/133079147/133079147_nb2-1-32.flv?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfqXBvEqxTEto8BTrNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0B599M=&uipk=5&nbs=1&deadline=1628052349&gen=playurlv2&os=coso1bv&oi=22403703&trid=6d8dcb37298648759460e682ea5df52fu&platform=pc&upsig=b162da52eb4bb0e21120b8c3e702ca21&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,platform&mid=0&bvc=vod&nettype=0&orderid=0,3&agrr=1&logo=80000000",
-				file: "./test_sdk/a.flv",
-				bvid: "BV1Zi4y1x7Q2",
+				url:  "https://download.lerzen.com/test.txt",
+				file: "./test_sdk/a.txt",
+				bvid: "BV1nJ411R7gk",
 			},
 			wantErr: true,
 		},
 		{
 			name: "03",
 			args: args{
-				url:  "https://upos-sz-mirrorkodoo1.bilivideo.com/upgcxcode/40/28/187262840/sssss187262840_nb2-1-32.flv?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfqXBvEqxTEto8BTrNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0B599M=&uipk=5&nbs=1&deadline=1628049727&gen=playurlv2&os=kodoo1bv&oi=22403703&trid=d5f5be91bb6a437f8a40fdd5eb796ea8u&platform=pc&upsig=6e06b8937ffb6561a12728d66492ef6f&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,platform&mid=0&bvc=vod&nettype=0&orderid=0,3&agrr=1&logo=80000000",
-				file: "./test_sdk/b.flv",
+				url:  "https://download.lerzen.com/test111.txt",
+				file: "./test_sdk/b.txt",
 				bvid: "BV1Zi4y1x7Q2",
 			},
 			wantErr: true,
@@ -68,8 +68,8 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "04",
 			args: args{
-				url:  "https://upos-sz-mirrorkodoo1.bilivideo.com/upgcxcode/40/28/187262840/121212-1-32.flv?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfqXBvEqxTEto8BTrNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0B599M=&uipk=5&nbs=1&deadline=1628049727&gen=playurlv2&os=kodoo1bv&oi=22403703&trid=d5f5be91bb6a437f8a40fdd5eb796ea8u&platform=pc&upsig=6e06b8937ffb6561a12728d66492ef6f&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,platform&mid=0&bvc=vod&nettype=0&orderid=0,3&agrr=1&logo=80000000",
-				file: "/a.flv",
+				url:  "https://download.lerzen.com/test.txt",
+				file: "/a.txt",
 				bvid: "BV1Zi4y1x7Q2",
 			},
 			wantErr: true,
@@ -78,7 +78,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 			name: "05",
 			args: args{
 				url:  "123",
-				file: "/a.flv",
+				file: "/a.txt",
 				bvid: "BV1Zi4y1x7Q2",
 			},
 			wantErr: true,
