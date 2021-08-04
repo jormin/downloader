@@ -420,7 +420,6 @@ func TestBiliBili_GetVideoInfo(t *testing.T) {
 						Rotate:   0,
 					},
 				},
-
 			},
 			wantErr: false,
 		},
