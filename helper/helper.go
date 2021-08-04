@@ -7,12 +7,14 @@ import (
 
 // FormatTime format time from timestamp
 func FormatTime(timestamp int64) string {
-	return time.Unix(timestamp, 0).Format("2006-01-02 15:04:05")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	return time.Unix(timestamp, 0).In(loc).Format("2006-01-02 15:04:05")
 }
 
 // FormatDate format date from timestamp
 func FormatDate(timestamp int64) string {
-	return time.Unix(timestamp, 0).Format("2006-01-02")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	return time.Unix(timestamp, 0).In(loc).Format("2006-01-02")
 }
 
 // RemoveIllegalCharacters remove illegal characters, such as ` `, `/`, `:` etc.
