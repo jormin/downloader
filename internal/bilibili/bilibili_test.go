@@ -2,6 +2,7 @@ package bilibili
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"reflect"
 	"testing"
@@ -89,7 +90,7 @@ func TestBiliBili_Download(t *testing.T) {
 				savePath: "",
 			},
 			args: args{
-				path: "",
+				path: "abcdefg",
 				id:   "BV1QX4y1G7fG",
 			},
 			wantSuccess: 0,
@@ -100,7 +101,7 @@ func TestBiliBili_Download(t *testing.T) {
 			name: "06",
 			bili: &BiliBili{
 				bvInfo:   nil,
-				savePath: "/",
+				savePath: "/abcdefg",
 			},
 			args: args{
 				path: "",
@@ -117,6 +118,7 @@ func TestBiliBili_Download(t *testing.T) {
 		t.Run(
 			tt.name, func(t *testing.T) {
 				gotSuccess, gotFail, err := tt.bili.Download(tt.args.path, tt.args.id)
+				fmt.Println(err)
 				if (err != nil) != tt.wantErr {
 					t.Errorf("Download() error = %v, wantErr %v", err, tt.wantErr)
 					return
