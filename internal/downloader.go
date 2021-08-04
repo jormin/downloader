@@ -6,8 +6,6 @@ type Downloader interface {
 	GetSiteName() string
 	// GetSiteUrl the url of site to download video, such as `https://www.bilibili.com/`.
 	GetSiteUrl() string
-	// GetTaskID the unique id of download task
-	GetTaskID() string
 	// GetVideoID the id of video that will be downloaded
 	GetVideoID() interface{}
 	// GetVideoTitle the title of video that will be downloaded

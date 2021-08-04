@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/jormin/downloader/errors"
+	"github.com/jormin/downloader/helper"
 	"github.com/jormin/downloader/internal"
 	"github.com/mitchellh/go-homedir"
 	"github.com/rs/xid"
@@ -75,9 +76,9 @@ func BeforeFunc(ctx *cli.Context) error {
 	curTime := time.Now().Unix()
 	task = internal.Task{
 		ID:           xid.New().String(),
-		Date:         time.Unix(curTime, 0).Format("2006-01-02"),
+		Date:         helper.FormatDate(curTime),
 		StartTime:    curTime,
-		StartTimeFmt: time.Unix(curTime, 0).Format("2006-01-02 15:04:05"),
+		StartTimeFmt: helper.FormatTime(curTime),
 	}
 	return nil
 }
@@ -87,7 +88,7 @@ func AfterFunc(ctx *cli.Context) error {
 	// complete task info
 	curTime := time.Now().Unix()
 	task.EndTime = curTime
-	task.EndTimeFmt = time.Unix(curTime, 0).Format("2006-01-02 15:04:05")
+	task.EndTimeFmt = helper.FormatTime(curTime)
 	task.Video = video
 	if err == nil {
 		task.Status = internal.TaskStatusSuccess

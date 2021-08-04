@@ -1,47 +1,47 @@
 package bilibili
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"os"
-	"strings"
 
+	"github.com/jormin/downloader/helper"
 	"github.com/jormin/downloader/internal"
-	"github.com/rs/xid"
 )
 
 // BiliBili
 type BiliBili struct {
 	bvInfo   *BvInfo
 	savePath string
+	sdk      SDK
 }
 
+// GetSiteName the name of site to download video, such as `bilibili`.
 func (b *BiliBili) GetSiteName() string {
 	return "bilibili"
 }
 
+// GetSiteUrl the url of site to download video, such as `https://www.bilibili.com/`.
 func (b *BiliBili) GetSiteUrl() string {
 	return "https://www.bilibili.com/"
 }
 
-func (b *BiliBili) GetTaskID() string {
-	return xid.New().String()
-}
-
+// GetVideoID the id of video that will be downloaded
 func (b *BiliBili) GetVideoID() interface{} {
 	return b.bvInfo.Bvid
 }
 
+// GetVideoTitle the title of video that will be downloaded
 func (b *BiliBili) GetVideoTitle() interface{} {
 	return b.bvInfo.Title
 }
 
+// GetSavePath the path to save video
 func (b *BiliBili) GetSavePath() string {
 	return b.savePath
 }
 
+// GetVideoInfo get video info
 func (b *BiliBili) GetVideoInfo() (*internal.Video, error) {
 	if b.bvInfo == nil {
 		return nil, errors.New("video info is empty")
@@ -70,75 +70,65 @@ func (b *BiliBili) GetVideoInfo() (*internal.Video, error) {
 	return &video, nil
 }
 
+// Download download video by id
 func (b *BiliBili) Download(path string, id interface{}) (success int, fail int, err error) {
 	bvid := id.(string)
-	sdk := NewSDK()
 	// 查询page列表
-	bvInfo, err := sdk.GetBvInfo(bvid)
+	bvInfo, err := b.sdk.GetBvInfo(bvid)
 	if err != nil {
 		return 0, 0, errors.New(fmt.Sprintf("get video info from site bilibili error, please check video id is right"))
 	}
 	b.bvInfo = bvInfo
-	directory := strings.Replace(bvInfo.Title, " ", "_", -1)
-	directory = strings.Replace(directory, "/", "_", -1)
+	directory := helper.RemoveIllegalCharacters(bvInfo.Title)
 	b.savePath = fmt.Sprintf("%s/%s", path, directory)
 	_, err = os.Stat(b.savePath)
-	if err != nil {
-		if !os.IsNotExist(err) {
-			return 0, 0, err
-		}
+	if err == nil {
+		return 0, 0, errors.New("save path exist")
+	}
+	if os.IsNotExist(err) {
 		err = os.Mkdir(b.savePath, os.ModePerm)
 		if err != nil {
 			return 0, 0, err
 		}
 	}
-	var failedPages []FailedPages
+	success, fail = b.DownloadPages(bvid, bvInfo.Pages, directory)
+	return success, fail, nil
+}
+
+// DownloadPage download page
+func (b *BiliBili) DownloadPages(bvid string, pages []Pages, directory string) (success int, fail int) {
 	// considering that external services have frequency restrictions, do not use goroutine
-	for _, p := range bvInfo.Pages {
+	for _, p := range pages {
+		// download page
+		var fileName string
+		if len(pages) == 1 {
+			fileName = directory
+		} else {
+			fileName = helper.RemoveIllegalCharacters(p.Part)
+		}
 		// get page info
-		cInfo, err := sdk.GetCInfo(bvid, p.Cid)
+		cInfo, err := b.sdk.GetCInfo(bvid, p.Cid)
 		if err != nil {
-			failedPages = append(
-				failedPages, FailedPages{
-					Pages: p,
-					Err:   err,
-				},
-			)
 			fmt.Printf("download video %d【%s】 fail, can not get video info\n", p.Cid, p.Part)
-			fail += 1
 			continue
 		}
 		// download video
-		var file, fileName string
-		if len(bvInfo.Pages) == 1 {
-			fileName = directory
-		} else {
-			fileName = strings.Replace(p.Part, " ", "_", -1)
-		}
-		file = fmt.Sprintf("%s/%s.flv", b.savePath, fileName)
-		err = sdk.DownloadVideo(cInfo.Durl[0].URL, file, bvid)
+		file := fmt.Sprintf("%s/%s.flv", b.savePath, fileName)
+		err = b.sdk.DownloadVideo(bvid, cInfo.Durl[0].URL, file)
 		if err != nil {
-			failedPages = append(
-				failedPages, FailedPages{
-					Pages: p,
-					Err:   err,
-				},
-			)
-			fmt.Printf("download video %d【%s】 fail, error: %v\n", p.Cid, p.Part, err)
+			fmt.Printf("download video %d【%s】 fail, %v\n", p.Cid, p.Part, err)
 			fail += 1
 			continue
 		}
 		fmt.Printf("download video %d【%s】 success\n", p.Cid, p.Part)
 		success += 1
 	}
-	if len(failedPages) > 0 {
-		b, _ := json.Marshal(failedPages)
-		log.Printf("failed pages: %s", b)
-	}
-	return success, fail, nil
+	return success, fail
 }
 
 // NewBiliBili
 func NewBiliBili() *BiliBili {
-	return &BiliBili{}
+	return &BiliBili{
+		sdk: SDK{},
+	}
 }

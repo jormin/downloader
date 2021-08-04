@@ -181,7 +181,7 @@ type SupportFormats struct {
 	Superscript    string `json:"superscript"`
 }
 
-// 失败信息
+// FailedPages
 type FailedPages struct {
 	Pages Pages
 	Err   error

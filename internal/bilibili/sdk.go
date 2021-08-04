@@ -75,10 +75,10 @@ func (bl *SDK) GetCInfo(bvid string, cid int) (*CInfo, error) {
 }
 
 // DownloadVideo 下载视频
-func (bl *SDK) DownloadVideo(url string, file string, bvid string) error {
+func (bl *SDK) DownloadVideo(bvid string, url string, file string) error {
 	_, err := os.Stat(file)
 	if err == nil || !os.IsNotExist(err) {
-		return err
+		return errors.New("file exist")
 	}
 	out, err := os.Create(file)
 	if err != nil {
@@ -88,10 +88,7 @@ func (bl *SDK) DownloadVideo(url string, file string, bvid string) error {
 	req, _ := http.NewRequest(http.MethodGet, url, nil)
 	req.Header.Add("Referer", fmt.Sprintf("https://www.bilibili.com/video/%s", bvid))
 	client := http.Client{}
-	res, err := client.Do(req)
-	if err != nil {
-		return err
-	}
+	res, _ := client.Do(req)
 	if res.StatusCode != 200 {
 		return errors.New(res.Status)
 	}
@@ -101,10 +98,7 @@ func (bl *SDK) DownloadVideo(url string, file string, bvid string) error {
 		if err == io.EOF {
 			break
 		}
-		_, err = out.WriteString(string(buf[:n]))
-		if err != nil {
-			break
-		}
+		_, _ = out.WriteString(string(buf[:n]))
 	}
 	return nil
 }
@@ -118,10 +112,7 @@ func (bl *SDK) http(url string, headers map[string]string, data interface{}) err
 		}
 	}
 	client := http.Client{}
-	res, err := client.Do(req)
-	if err != nil {
-		return err
-	}
+	res, _ := client.Do(req)
 	if res.StatusCode != http.StatusOK {
 		return errors.New(res.Status)
 	}
@@ -134,9 +125,6 @@ func (bl *SDK) http(url string, headers map[string]string, data interface{}) err
 	}
 	biliData := biliRes.Data
 	b, _ = json.Marshal(biliData)
-	err = json.Unmarshal(b, data)
-	if err != nil {
-		return err
-	}
+	_ = json.Unmarshal(b, data)
 	return nil
 }
