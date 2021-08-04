@@ -1,9 +1,11 @@
 package bilibili
 
 import (
+	"fmt"
 	"os"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func TestNewSDK(t *testing.T) {
@@ -41,7 +43,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "01",
 			args: args{
-				url:  "http://download.lerzen.com/test.txt",
+				url:  fmt.Sprintf("http://download.lerzen.com/test.txt?%d", time.Now().Unix()),
 				file: "./test_sdk/a.txt",
 				bvid: "BV1nJ411R7gk",
 			},
@@ -50,7 +52,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "02",
 			args: args{
-				url:  "http://download.lerzen.com/test.txt",
+				url:  fmt.Sprintf("http://download.lerzen.com/test.txt?%d", time.Now().Unix()),
 				file: "./test_sdk/a.txt",
 				bvid: "BV1nJ411R7gk",
 			},
@@ -59,7 +61,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "03",
 			args: args{
-				url:  "http://download.lerzen.com/test111.txt",
+				url:  fmt.Sprintf("http://download.lerzen.com/test111.txt?%d", time.Now().Unix()),
 				file: "./test_sdk/b.txt",
 				bvid: "BV1Zi4y1x7Q2",
 			},
@@ -68,7 +70,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "04",
 			args: args{
-				url:  "http://download.lerzen.com/test.txt",
+				url:  fmt.Sprintf("http://download.lerzen.com/test.txt?%d", time.Now().Unix()),
 				file: "/zxcvasdf/a.txt",
 				bvid: "BV1Zi4y1x7Q2",
 			},
