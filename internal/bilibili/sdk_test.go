@@ -69,7 +69,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 			name: "04",
 			args: args{
 				url:  "https://download.lerzen.com/test.txt",
-				file: "/a.txt",
+				file: "/zxcvasdf/a.txt",
 				bvid: "BV1Zi4y1x7Q2",
 			},
 			wantErr: true,
