@@ -14,16 +14,8 @@ func init() {
 			Usage:     "download video from bilibili (https://www.bilibili.com/)",
 			Action:    BiliBili,
 			ArgsUsage: "[bvid: the bvid of video started by 'BV' that can be found from url]",
-			Flags: []cli.Flag{
-				&cli.StringFlag{
-					Name:        "d",
-					Usage:       "the directory to save video",
-					Required:    false,
-					DefaultText: "",
-				},
-			},
-			Before: BeforeFunc,
-			After:  AfterFunc,
+			Before:    BeforeFunc,
+			After:     AfterFunc,
 		},
 	)
 }

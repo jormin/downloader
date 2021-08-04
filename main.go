@@ -16,6 +16,14 @@ func main() {
 		Version:     "v0.0.1",
 		Description: "A simple tool to manage your todo list",
 		Commands:    config.GetRegisteredCommands(),
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:        "d",
+				Usage:       "the directory to save video",
+				Required:    false,
+				DefaultText: "",
+			},
+		},
 	}
 	err := app.Run(os.Args)
 	if err != nil {
