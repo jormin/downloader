@@ -93,7 +93,7 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 		}
 	}
 	var failedPages []FailedPages
-	// Considering that external services have frequency restrictions, do not use goroutine
+	// considering that external services have frequency restrictions, do not use goroutine
 	for _, p := range bvInfo.Pages {
 		// get page info
 		cInfo, err := sdk.GetCInfo(bvid, p.Cid)
@@ -115,7 +115,7 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 		} else {
 			fileName = strings.Replace(p.Part, " ", "_", -1)
 		}
-		file = fmt.Sprintf("%s/%s.mp4", b.savePath, fileName)
+		file = fmt.Sprintf("%s/%s.flv", b.savePath, fileName)
 		err = sdk.DownloadVideo(cInfo.Durl[0].URL, file, bvid)
 		if err != nil {
 			failedPages = append(
