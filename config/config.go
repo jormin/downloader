@@ -15,7 +15,7 @@ var commands []*cli.Command
 // root
 var root = "root"
 
-// Register command
+// RegisterCommand register command that registered in function `init`
 func RegisterCommand(parent string, command *cli.Command) {
 	if parent == "" {
 		parent = root
@@ -26,13 +26,13 @@ func RegisterCommand(parent string, command *cli.Command) {
 	cmdCfg[parent] = append(cmdCfg[parent], command)
 }
 
-// Get registered commands
+// GetRegisteredCommands get registered commands
 func GetRegisteredCommands() []*cli.Command {
 	ParseRegisteredCommands(root, nil)
 	return commands
 }
 
-// Parse all registered commands
+// ParseRegisteredCommands parse all registered commands
 func ParseRegisteredCommands(path string, parent *cli.Command) {
 	if parent == nil {
 		for _, command := range cmdCfg[path] {

@@ -9,7 +9,7 @@ import (
 	"github.com/jormin/downloader/internal"
 )
 
-// BiliBili
+// BiliBili bilibili struct
 type BiliBili struct {
 	bvInfo   *BvInfo
 	savePath string
@@ -21,8 +21,8 @@ func (b *BiliBili) GetSiteName() string {
 	return "bilibili"
 }
 
-// GetSiteUrl the url of site to download video, such as `https://www.bilibili.com/`.
-func (b *BiliBili) GetSiteUrl() string {
+// GetSiteURL the url of site to download video, such as `https://www.bilibili.com/`.
+func (b *BiliBili) GetSiteURL() string {
 	return "https://www.bilibili.com/"
 }
 
@@ -76,7 +76,7 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 	// 查询page列表
 	bvInfo, err := b.sdk.GetBvInfo(bvid)
 	if err != nil {
-		return 0, 0, errors.New(fmt.Sprintf("get video info from site bilibili error, please check video id is right"))
+		return 0, 0, fmt.Errorf("get video info from site bilibili error, please check video id is right")
 	}
 	b.bvInfo = bvInfo
 	directory := helper.RemoveIllegalCharacters(bvInfo.Title)
@@ -95,7 +95,7 @@ func (b *BiliBili) Download(path string, id interface{}) (success int, fail int,
 	return success, fail, nil
 }
 
-// DownloadPage download page
+// DownloadPages download pages
 func (b *BiliBili) DownloadPages(bvid string, pages []Pages, directory string) (success int, fail int) {
 	// considering that external services have frequency restrictions, do not use goroutine
 	for _, p := range pages {
@@ -117,16 +117,16 @@ func (b *BiliBili) DownloadPages(bvid string, pages []Pages, directory string) (
 		err = b.sdk.DownloadVideo(bvid, cInfo.Durl[0].URL, file)
 		if err != nil {
 			fmt.Printf("download video %d【%s】 fail, %v\n", p.Cid, p.Part, err)
-			fail += 1
+			fail++
 			continue
 		}
 		fmt.Printf("download video %d【%s】 success\n", p.Cid, p.Part)
-		success += 1
+		success++
 	}
 	return success, fail
 }
 
-// NewBiliBili
+// NewBiliBili get the new bilibili struct
 func NewBiliBili() *BiliBili {
 	return &BiliBili{
 		sdk: SDK{},

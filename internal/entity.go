@@ -32,6 +32,8 @@ type Page struct {
 }
 
 const (
-	TaskStatusFail    = iota // status: fail
-	TaskStatusSuccess        // status: success
+	// TaskStatusFail status: fail
+	TaskStatusFail = iota
+	// TaskStatusSuccess status: success
+	TaskStatusSuccess
 )

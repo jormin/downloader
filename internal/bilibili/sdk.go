@@ -11,70 +11,78 @@ import (
 )
 
 const (
-	ApiAvInfo = iota
-	ApiBvInfo
-	ApiPageList
-	ApiCInfo
+	// APIAvInfo the no of api `https://api.bilibili.com/x/web-interface/view?aid=%d`
+	APIAvInfo = iota
+	// APIBvInfo the no of api `https://api.bilibili.com/x/web-interface/view?bvid=%s`
+	APIBvInfo
+	// APIPageList the no of api `https://api.bilibili.com/x/player/pagelist?bvid=%s`
+	APIPageList
+	// APICInfo the no of api `https://api.bilibili.com/x/player/playurl?bvid=%s&cid=%d&otype=json`
+	APICInfo
+)
+
+const (
+	// ResCodeOK res code: success
 	ResCodeOK = 0
 )
 
 // Api地址
 var apis = map[int]string{
-	ApiAvInfo:   "https://api.bilibili.com/x/web-interface/view?aid=%d",
-	ApiBvInfo:   "https://api.bilibili.com/x/web-interface/view?bvid=%s",
-	ApiPageList: "https://api.bilibili.com/x/player/pagelist?bvid=%s",
-	ApiCInfo:    "https://api.bilibili.com/x/player/playurl?bvid=%s&cid=%d&otype=json",
+	APIAvInfo:   "https://api.bilibili.com/x/web-interface/view?aid=%d",
+	APIBvInfo:   "https://api.bilibili.com/x/web-interface/view?bvid=%s",
+	APIPageList: "https://api.bilibili.com/x/player/pagelist?bvid=%s",
+	APICInfo:    "https://api.bilibili.com/x/player/playurl?bvid=%s&cid=%d&otype=json",
 }
 
-// SDK
+// SDK bilibili api sdk
 type SDK struct{}
 
-// NewSDK
+// NewSDK get the new bilibili sdk
 func NewSDK() *SDK {
 	return &SDK{}
 }
 
-// GetAvInfo 获取AV信息
+// GetAvInfo get av info by avid
 func (bl *SDK) GetAvInfo(avid int) (*AvInfo, error) {
 	var avInfo AvInfo
-	err := bl.http(fmt.Sprintf(apis[ApiAvInfo], avid), nil, &avInfo)
+	err := bl.http(fmt.Sprintf(apis[APIAvInfo], avid), nil, &avInfo)
 	if err != nil {
 		return nil, err
 	}
 	return &avInfo, nil
 }
 
-// GetBvInfo 获取BV信息
+// GetBvInfo get bvinfo by bvid
 func (bl *SDK) GetBvInfo(bvid string) (*BvInfo, error) {
 	var bvInfo BvInfo
-	err := bl.http(fmt.Sprintf(apis[ApiBvInfo], bvid), nil, &bvInfo)
+	err := bl.http(fmt.Sprintf(apis[APIBvInfo], bvid), nil, &bvInfo)
 	if err != nil {
 		return nil, err
 	}
 	return &bvInfo, nil
 }
 
-// GetPageListByBVID 根据BVID查询page列表
+// GetPagesByBVID get pages by bvid
 func (bl *SDK) GetPagesByBVID(bvid string) ([]Page, error) {
 	var pages []Page
-	err := bl.http(fmt.Sprintf(apis[ApiPageList], bvid), nil, &pages)
+	err := bl.http(fmt.Sprintf(apis[APIPageList], bvid), nil, &pages)
 	if err != nil {
 		return nil, err
 	}
 	return pages, nil
 }
 
-// GetCInfo 后去C信息
+// GetCInfo get cinfo bv bvid and cid
 func (bl *SDK) GetCInfo(bvid string, cid int) (*CInfo, error) {
 	var cInfo CInfo
-	err := bl.http(fmt.Sprintf(apis[ApiCInfo], bvid, cid), nil, &cInfo)
+	err := bl.http(fmt.Sprintf(apis[APICInfo], bvid, cid), nil, &cInfo)
 	if err != nil {
 		return nil, err
 	}
 	return &cInfo, nil
 }
 
-// DownloadVideo 下载视频
+// DownloadVideo down video by url and bvid
 func (bl *SDK) DownloadVideo(bvid string, url string, file string) error {
 	_, err := os.Stat(file)
 	if err == nil || !os.IsNotExist(err) {
@@ -106,7 +114,7 @@ func (bl *SDK) DownloadVideo(bvid string, url string, file string) error {
 	return nil
 }
 
-// http
+// http send http request
 func (bl *SDK) http(url string, headers map[string]string, data interface{}) error {
 	req, _ := http.NewRequest(http.MethodGet, url, nil)
 	if headers != nil {

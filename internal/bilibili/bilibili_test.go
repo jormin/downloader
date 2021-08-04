@@ -104,7 +104,7 @@ func TestBiliBili_Download(t *testing.T) {
 				savePath: "/abcdefg",
 			},
 			args: args{
-				path: "",
+				path: "abcdefg",
 				id:   "BV1QX4y1G7fG",
 			},
 			wantSuccess: 0,
@@ -346,8 +346,8 @@ func TestBiliBili_GetSiteUrl(t *testing.T) {
 					bvInfo:   tt.fields.bvInfo,
 					savePath: tt.fields.savePath,
 				}
-				if got := b.GetSiteUrl(); got != tt.want {
-					t.Errorf("GetSiteUrl() = %v, want %v", got, tt.want)
+				if got := b.GetSiteURL(); got != tt.want {
+					t.Errorf("GetSiteURL() = %v, want %v", got, tt.want)
 				}
 			},
 		)

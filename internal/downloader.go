@@ -1,11 +1,11 @@
 package internal
 
-// Downloader
+// Downloader the tool to download video from third-party sites
 type Downloader interface {
 	// GetSiteName the name of site to download video, such as `bilibili`.
 	GetSiteName() string
-	// GetSiteUrl the url of site to download video, such as `https://www.bilibili.com/`.
-	GetSiteUrl() string
+	// GetSiteURL the url of site to download video, such as `https://www.bilibili.com/`.
+	GetSiteURL() string
 	// GetVideoID the id of video that will be downloaded
 	GetVideoID() interface{}
 	// GetVideoTitle the title of video that will be downloaded

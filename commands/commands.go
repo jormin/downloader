@@ -41,15 +41,15 @@ func getLogFilePath() string {
 	return fmt.Sprintf("%s/downloader.log", home)
 }
 
-// Before
+// BeforeFunc do something before execute command
 func BeforeFunc(ctx *cli.Context) error {
 	// check video id
 	if ctx.Args().Len() == 0 {
-		return errors.MissingRequiredArgumentErr
+		return errors.ErrMissingRequiredArgument
 	}
 	vid = ctx.Args().Get(0)
 	if vid == "" {
-		return errors.ArgumentVdValidateErr
+		return errors.ErrArgumentVdValidate
 	}
 	// check save dir
 	dir, _ = os.Getwd()
@@ -59,7 +59,7 @@ func BeforeFunc(ctx *cli.Context) error {
 		case "d":
 			dir = ctx.String("d")
 			if dir == "" {
-				return errors.FlagDirValidateErr
+				return errors.ErrFlagDirValidate
 			}
 		}
 	}
@@ -83,7 +83,7 @@ func BeforeFunc(ctx *cli.Context) error {
 	return nil
 }
 
-// After
+// AfterFunc  do something before after command
 func AfterFunc(ctx *cli.Context) error {
 	// complete task info
 	curTime := time.Now().Unix()
