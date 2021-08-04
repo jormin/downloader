@@ -6,7 +6,7 @@ downloader
 [![Go Report Card](https://goreportcard.com/badge/github.com/jormin/downloader)](https://goreportcard.com/report/github.com/jormin/downloader)
 [![](https://img.shields.io/badge/version-v0.0.1-success.svg)](https://github.com/jormin/downloader)
 
-This is a tool to download video from third-paty video sites such as bilibili, aiyiqi, youku etc. Only support public free sources, no cracking of vip resources.
+This is a tool to download video from third-paty video sites, such as bilibili, aiyiqi, youku etc. Only support public free resources, no cracking of vip resources.
 
 Support
 -----
