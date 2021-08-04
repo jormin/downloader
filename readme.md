@@ -70,7 +70,7 @@ downloader bilibili BV1Zi4y1x7Q2
 - save in specified directory with tag `-d`
 
 ```shell
-downloader bilibili -d ~/Desktop BV1Zi4y1x7Q2
+downloader -d ~/Desktop bilibili BV1Zi4y1x7Q2
 ```
 
 License
