@@ -4,6 +4,7 @@ downloader
 [![Build Status](https://github.com/jormin/downloader/workflows/test/badge.svg?branch=master)](https://github.com/jormin/downloader/actions?query=workflow%3Atest)
 [![Codecov](https://codecov.io/gh/jormin/downloader/branch/master/graph/badge.svg)](https://codecov.io/gh/jormin/downloader)
 [![Go Report Card](https://goreportcard.com/badge/github.com/jormin/downloader)](https://goreportcard.com/report/github.com/jormin/downloader)
+[![](https://img.shields.io/badge/version-v0.0.1-success.svg)](https://github.com/jormin/downloader)
 
 This is a tool to download video from third-paty video sites such as bilibili, aiyiqi, youku etc. Only support public free sources, no cracking of vip resources.
 
