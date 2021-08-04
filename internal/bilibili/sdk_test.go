@@ -41,7 +41,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "01",
 			args: args{
-				url:  "https://download.lerzen.com/test.txt",
+				url:  "http://download.lerzen.com/test.txt",
 				file: "./test_sdk/a.txt",
 				bvid: "BV1nJ411R7gk",
 			},
@@ -50,7 +50,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "02",
 			args: args{
-				url:  "https://download.lerzen.com/test.txt",
+				url:  "http://download.lerzen.com/test.txt",
 				file: "./test_sdk/a.txt",
 				bvid: "BV1nJ411R7gk",
 			},
@@ -59,7 +59,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "03",
 			args: args{
-				url:  "https://download.lerzen.com/test111.txt",
+				url:  "http://download.lerzen.com/test111.txt",
 				file: "./test_sdk/b.txt",
 				bvid: "BV1Zi4y1x7Q2",
 			},
@@ -68,7 +68,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "04",
 			args: args{
-				url:  "https://download.lerzen.com/test.txt",
+				url:  "http://download.lerzen.com/test.txt",
 				file: "/zxcvasdf/a.txt",
 				bvid: "BV1Zi4y1x7Q2",
 			},
