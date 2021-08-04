@@ -41,7 +41,7 @@ func TestSDK_DownloadVideo(t *testing.T) {
 		{
 			name: "01",
 			args: args{
-				url:  "https://upos-sz-mirrorcoso1.bilivideo.com/upgcxcode/47/91/133079147/133079147_nb2-1-32.flv?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfqXBvEqxTEto8BTrNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0B599M=&uipk=5&nbs=1&deadline=1628061222&gen=playurlv2&os=coso1bv&oi=22403703&trid=7505824fd5fe45e59f544a298256328du&platform=pc&upsig=20b9a4b1c6af4f381f68c70c73cc0b01&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,platform&mid=0&bvc=vod&nettype=0&orderid=0,3&agrr=1&logo=80000000",
+				url:  "https://upos-sz-mirrorcoso1.bilivideo.com/upgcxcode/47/91/133079147/133079147_nb2-1-32.flv?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfqXBvEqxTEto8BTrNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0B599M=&uipk=5&nbs=1&deadline=1628068845&gen=playurlv2&os=coso1bv&oi=22403703&trid=55a4d9997a1e4f7692d6511464bf5452u&platform=pc&upsig=aec919744f34f14313adbb74345df980&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,platform&mid=0&bvc=vod&nettype=0&orderid=0,3&agrr=1&logo=80000000",
 				file: "./test_sdk/a.flv",
 				bvid: "BV1nJ411R7gk",
 			},

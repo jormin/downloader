@@ -62,9 +62,9 @@ func TestBiliBili_Download(t *testing.T) {
 			},
 			args: args{
 				path: "./test",
-				id:   "BV1gJ411n7ky",
+				id:   "BV1NU4y1H71S",
 			},
-			wantSuccess: 3,
+			wantSuccess: 2,
 			wantFail:    0,
 			wantErr:     false,
 		},
